@@ -13,6 +13,18 @@
     <string name="test_simulate_SMS">Test send</string>
     <string name="bluetooth_setup">Add Bluetooth Address + Service + Characteristic</string>
 
+    <!-- Strings for activity_rule_edit -->
+    <string name="phone_number_descriptor">Phone number with area code</string>
+    <string name="contact_name_descriptor">Contact name to display</string>
+    <string name="contact_email_descriptor">Email address</string>
+    <string name="contact_facebook_descriptor">Facebook user?</string>
+    <string name="contact_keyword_descriptor">Keyword for text or email(Optional)</string>
+    <string name="notification_color_descriptor">Select colour for this rule</string>
+    <string name="notification_vibrate_descriptor">Select vibration pattern for this rule (1 = 1/10s on 9/10s off, ...10 = continuous)</string>
+    <string name="notification_vibrate_duration">Total time for buzzing. Set 0 for no buzz, -1 for stop with button press</string>
+
+
+
     <string name="scan">Scan</string>
     <string name="stopScan">Stop Scan</string>
     <string name="connManager">Connection Manager</string>
