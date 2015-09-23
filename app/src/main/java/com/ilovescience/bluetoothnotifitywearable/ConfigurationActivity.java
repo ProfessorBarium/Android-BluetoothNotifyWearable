@@ -82,7 +82,7 @@ public class ConfigurationActivity extends AppCompatActivity  {
         contactInput = (EditText)findViewById(R.id.editText_phone_contact);
         addBLEconnectionInfo = (Button)findViewById(R.id.button_AddBLEinfo);
         testAT = (Button)findViewById(R.id.button_AT_SEND);
-        addRule = (Button)findViewById(R.id.button_new_rule);
+        addRule = (Button)findViewById(R.id.button_NEW_RULE);
 
         /*final BluetoothManager manager = (BluetoothManager)getSystemService(BLUETOOTH_SERVICE);
         mBluetoothAdapter = manager.getAdapter();*/
@@ -145,8 +145,9 @@ public class ConfigurationActivity extends AppCompatActivity  {
         addRule.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v)
             {
-                Intent intent = new Intent(mContext,RuleEditActivity.class);
-                startActivity(intent);
+                Toast.makeText(mContext, "WTF YOU POS!!!", Toast.LENGTH_SHORT).show();
+             Intent intent = new Intent(mContext,RuleEditActivity.class);
+                 mContext.startActivity(intent);
 
             }
         });

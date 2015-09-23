@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Bluetooth Notify Wearable</string>
+    <string name="title_acitivity_edit">Rule Add/Edit</string>
     <string name="hello_world">Hello there you sexy world!</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_other">Other</string>
@@ -14,20 +15,40 @@
     <string name="bluetooth_setup">Add Bluetooth Address + Service + Characteristic</string>
     <string name="button_new_rule">Add a new Rule</string>
 
-    <!-- Strings for activity_rule_edit -->
     <string name="phone_number_descriptor">Phone number with area code</string>
     <string name="contact_name_descriptor">Contact name to display</string>
     <string name="contact_email_descriptor">Email address</string>
-    <string name="contact_facebook_descriptor">Facebook user?</string>
+    <string name="contact_facebook_descriptor">Facebook user</string>
     <string name="contact_keyword_descriptor">Keyword for text or email(Optional)</string>
     <string name="notification_color_descriptor">Select colour for this rule</string>
-    <string name="notification_vibrate_descriptor">Select vibration pattern for this rule (1 = 1/10s on 9/10s off, ...10 = continuous)</string>
+    <string name="notification_vibrate_descriptor">Select vibration pattern for this rule continuous</string>
     <string name="notification_vibrate_duration">Total time for buzzing. Set 0 for no buzz, -1 for stop with button press</string>
-    <string name="button_Get_Contact">Get Contcact</string>
+    <string name="button_Get_Contact">Get Contact</string>
     <string name="button_Set_Rule">Set Rule</string>
-    <string name="button_Erase_Rule">Erase Rule?</string>
+    <string name="button_Erase_Rule">Erase Rule</string>
 
+    <string-array name="buzz_pattern">
+        <item>On 0.1s off .09s</item>
+        <item>On 0.5s off 0.5s</item>
+        <item>Continuous</item>
+    </string-array>
 
+    <string-array name="buzz_duration">
+        <item>1s</item>
+        <item>2s</item>
+        <item>Until Stopped</item>
+    </string-array>
+
+    <string-array name="indicator_color">
+        <item>Red</item>
+        <item>Blue</item>
+        <item>Green</item>
+        <item>White</item>
+        <item>Yellow</item>
+        <item>Magenta</item>
+        <item>Cyan</item>
+        <item>No light</item>
+    </string-array>
 
 
     <string name="scan">Scan</string>

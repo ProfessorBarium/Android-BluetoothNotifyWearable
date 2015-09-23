@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:backgroundTint="@color/material_deep_teal_500"
-    android:weightSum="1">
+    tools:context=".RuleEditActivity">
 
     <EditText
         android:layout_width="match_parent"
@@ -60,7 +61,7 @@
     <Spinner
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:id="@+id/spinner" />
+        android:id="@+id/spinner_buzz_type" />
 
     <TextView
         android:layout_width="match_parent"
@@ -73,23 +74,23 @@
     <Spinner
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:id="@+id/spinner2" />
+        android:id="@+id/spinner_duration" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="@string/notification_vibrate_descriptor"
+        android:text="@string/notification_vibrate_duration"
         android:id="@+id/textView3" />
-
     <Spinner
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:id="@+id/spinner3" />
-
-    <!-- android:layout_height="wrap_content"-->
+        android:id="@+id/spinner_Color" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="@string/notification_vibrate_duration"
+        android:text="@string/notification_color_descriptor"
         android:id="@+id/textView4" />
 
     <LinearLayout
@@ -118,5 +119,4 @@
             android:text="@string/button_Erase_Rule"
             android:id="@+id/button_Erase_rule" />
     </LinearLayout>
-
 </LinearLayout>
