@@ -46,6 +46,7 @@ public class ConfigurationActivity extends AppCompatActivity  {
     Button resetSharedPrefs;
     Button addBLEconnectionInfo;
     Button testAT;
+    Button addRule;
     EditText contactInput;
     final static String myMacAddress = "B4:99:4C:68:4A:59";
     static final int PICK_CONTACT_REQUEST = 1;  // The request code
@@ -81,6 +82,7 @@ public class ConfigurationActivity extends AppCompatActivity  {
         contactInput = (EditText)findViewById(R.id.editText_phone_contact);
         addBLEconnectionInfo = (Button)findViewById(R.id.button_AddBLEinfo);
         testAT = (Button)findViewById(R.id.button_AT_SEND);
+        addRule = (Button)findViewById(R.id.button_new_rule);
 
         /*final BluetoothManager manager = (BluetoothManager)getSystemService(BLUETOOTH_SERVICE);
         mBluetoothAdapter = manager.getAdapter();*/
@@ -136,6 +138,15 @@ public class ConfigurationActivity extends AppCompatActivity  {
 
                 mHM10.sendATCommand("AT");
                 //startScan();
+
+            }
+        });
+
+        addRule.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v)
+            {
+                Intent intent = new Intent(mContext,RuleEditActivity.class);
+                startActivity(intent);
 
             }
         });

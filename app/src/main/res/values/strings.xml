@@ -12,6 +12,7 @@
     <string name="my_set_saved_Callers">mySavedCallers</string>
     <string name="test_simulate_SMS">Test send</string>
     <string name="bluetooth_setup">Add Bluetooth Address + Service + Characteristic</string>
+    <string name="button_new_rule">Add a new Rule</string>
 
     <!-- Strings for activity_rule_edit -->
     <string name="phone_number_descriptor">Phone number with area code</string>
@@ -22,6 +23,10 @@
     <string name="notification_color_descriptor">Select colour for this rule</string>
     <string name="notification_vibrate_descriptor">Select vibration pattern for this rule (1 = 1/10s on 9/10s off, ...10 = continuous)</string>
     <string name="notification_vibrate_duration">Total time for buzzing. Set 0 for no buzz, -1 for stop with button press</string>
+    <string name="button_Get_Contact">Get Contcact</string>
+    <string name="button_Set_Rule">Set Rule</string>
+    <string name="button_Erase_Rule">Erase Rule?</string>
+
 
 
 
@@ -67,6 +72,7 @@
     <string name="ioState">IO State</string>
     <string name="inputVoltagePrompt">Select pin</string>
     <string name="checkInputVoltage">Check input voltage</string>
+    <string name="button_Set_New_Rule">Set New Rule</string>
     <string-array name="inputVoltageDescriptors">
         <item>P0_0AT+ADCB?</item>
         <item>P0_1AT+ADCA?</item>
