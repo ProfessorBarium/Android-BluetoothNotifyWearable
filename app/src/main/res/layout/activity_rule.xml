@@ -6,13 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".RuleEditActivity">
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="text"
-        android:ems="10"
-        android:id="@+id/editText_contact_name" />
-
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -21,10 +14,14 @@
 
     <EditText
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="phone"
+        android:layout_height="@dimen/input_text_height"
+        android:inputType="text"
         android:ems="10"
-        android:id="@+id/editText_contact_phone" />
+        android:id="@+id/editText_contact_name"
+        android:editable="false"
+        android:paddingTop="@dimen/input_text_padding"
+        android:paddingBottom="@dimen/input_text_padding"
+        android:gravity="fill_vertical" />
 
     <TextView
         android:layout_width="match_parent"
@@ -34,10 +31,13 @@
 
     <EditText
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textEmailAddress"
+        android:layout_height="@dimen/input_text_height"
+        android:inputType="phone"
         android:ems="10"
-        android:id="@+id/editText_contact_email" />
+        android:id="@+id/editText_contact_phone"
+        android:paddingTop="@dimen/input_text_padding"
+        android:paddingBottom="@dimen/input_text_padding"
+        android:gravity="fill_vertical" />
 
     <TextView
         android:layout_width="219dp"
@@ -47,10 +47,12 @@
 
     <EditText
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="text"
+        android:layout_height="@dimen/input_text_height"
+        android:inputType="textEmailAddress"
         android:ems="10"
-        android:id="@+id/editText_keyword" />
+        android:id="@+id/editText_contact_email"
+        android:paddingTop="@dimen/input_text_padding"
+        android:paddingBottom="@dimen/input_text_padding" />
 
     <TextView
         android:layout_width="match_parent"
@@ -58,10 +60,14 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="@string/contact_keyword_descriptor" />
 
-    <Spinner
+    <EditText
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:id="@+id/spinner_buzz_type" />
+        android:layout_height="@dimen/input_text_height"
+        android:inputType="text"
+        android:ems="10"
+        android:id="@+id/editText_keyword"
+        android:paddingTop="@dimen/input_text_padding"
+        android:paddingBottom="@dimen/input_text_padding" />
 
     <TextView
         android:layout_width="match_parent"
@@ -70,11 +76,11 @@
         android:text="@string/notification_vibrate_descriptor"
         android:id="@+id/textView" />
 
-
     <Spinner
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:id="@+id/spinner_duration" />
+        android:layout_height="@dimen/spinner_height"
+        android:id="@+id/spinner_buzz_type" />
+
 
     <TextView
         android:layout_width="match_parent"
@@ -82,16 +88,23 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="@string/notification_vibrate_duration"
         android:id="@+id/textView3" />
+
     <Spinner
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:id="@+id/spinner_Color" />
+        android:layout_height="@dimen/spinner_height"
+        android:id="@+id/spinner_duration" />
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="@string/notification_color_descriptor"
         android:id="@+id/textView4" />
+
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/spinner_height"
+        android:id="@+id/spinner_Color" />
 
     <LinearLayout
         android:orientation="horizontal"

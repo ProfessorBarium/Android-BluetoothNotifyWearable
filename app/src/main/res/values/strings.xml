@@ -22,7 +22,7 @@
     <string name="contact_keyword_descriptor">Keyword for text or email(Optional)</string>
     <string name="notification_color_descriptor">Select colour for this rule</string>
     <string name="notification_vibrate_descriptor">Select vibration pattern for this rule continuous</string>
-    <string name="notification_vibrate_duration">Total time for buzzing. Set 0 for no buzz, -1 for stop with button press</string>
+    <string name="notification_vibrate_duration">Total time for buzzing.</string>
     <string name="button_Get_Contact">Get Contact</string>
     <string name="button_Set_Rule">Set Rule</string>
     <string name="button_Erase_Rule">Erase Rule</string>
