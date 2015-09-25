@@ -14,13 +14,10 @@
 
     <EditText
         android:layout_width="match_parent"
-        android:layout_height="@dimen/input_text_height"
+        android:layout_height="wrap_content"
         android:inputType="text"
-        android:ems="10"
         android:id="@+id/editText_contact_name"
         android:editable="false"
-        android:paddingTop="@dimen/input_text_padding"
-        android:paddingBottom="@dimen/input_text_padding"
         android:gravity="fill_vertical" />
 
     <TextView
@@ -31,12 +28,9 @@
 
     <EditText
         android:layout_width="match_parent"
-        android:layout_height="@dimen/input_text_height"
+        android:layout_height="wrap_content"
         android:inputType="phone"
-        android:ems="10"
         android:id="@+id/editText_contact_phone"
-        android:paddingTop="@dimen/input_text_padding"
-        android:paddingBottom="@dimen/input_text_padding"
         android:gravity="fill_vertical" />
 
     <TextView
@@ -47,12 +41,9 @@
 
     <EditText
         android:layout_width="match_parent"
-        android:layout_height="@dimen/input_text_height"
+        android:layout_height="wrap_content"
         android:inputType="textEmailAddress"
-        android:ems="10"
-        android:id="@+id/editText_contact_email"
-        android:paddingTop="@dimen/input_text_padding"
-        android:paddingBottom="@dimen/input_text_padding" />
+        android:id="@+id/editText_contact_email" />
 
     <TextView
         android:layout_width="match_parent"
@@ -62,12 +53,9 @@
 
     <EditText
         android:layout_width="match_parent"
-        android:layout_height="@dimen/input_text_height"
+        android:layout_height="wrap_content"
         android:inputType="text"
-        android:ems="10"
-        android:id="@+id/editText_keyword"
-        android:paddingTop="@dimen/input_text_padding"
-        android:paddingBottom="@dimen/input_text_padding" />
+        android:id="@+id/editText_keyword" />
 
     <TextView
         android:layout_width="match_parent"
@@ -123,7 +111,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/button_Set_Rule"
-            android:id="@+id/button_add_rule" />
+            android:id="@+id/button_set_rule" />
 
         <Button
             style="?android:attr/buttonStyleSmall"

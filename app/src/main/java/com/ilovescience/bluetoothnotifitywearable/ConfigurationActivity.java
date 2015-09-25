@@ -49,7 +49,7 @@ public class ConfigurationActivity extends AppCompatActivity  {
     Button addRule;
     EditText contactInput;
     final static String myMacAddress = "B4:99:4C:68:4A:59";
-    static final int PICK_CONTACT_REQUEST = 1;  // The request code
+    //static final int PICK_CONTACT_REQUEST = 1;  // The request code
 
     Context mContext;
 
@@ -98,8 +98,8 @@ public class ConfigurationActivity extends AppCompatActivity  {
 
         addContact.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent openContactsIntent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
-                pickContact();
+
+                //pickContact();
 
                 /*String newContactString = contactInput.getText().toString();
                 String testString;
@@ -145,7 +145,7 @@ public class ConfigurationActivity extends AppCompatActivity  {
         addRule.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v)
             {
-                Toast.makeText(mContext, "WTF YOU POS!!!", Toast.LENGTH_SHORT).show();
+
              Intent intent = new Intent(mContext,RuleEditActivity.class);
                  mContext.startActivity(intent);
 
@@ -174,12 +174,7 @@ public class ConfigurationActivity extends AppCompatActivity  {
 
     }
 
-    private void pickContact()
-    {
-        Intent pickContactIntent = new Intent(Intent.ACTION_PICK, Uri.parse("content://contacts"));
-        pickContactIntent.setType(ContactsContract.CommonDataKinds.Phone.CONTENT_TYPE); // Show user only contacts w/ phone numbers
-        startActivityForResult(pickContactIntent, PICK_CONTACT_REQUEST);
-    }
+
 
 
     private void tryConnection()
@@ -196,57 +191,9 @@ public class ConfigurationActivity extends AppCompatActivity  {
         }
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        // Check which request we're responding to
-        if (requestCode == PICK_CONTACT_REQUEST) {
-            // Make sure the request was successful
-            if (resultCode == RESULT_OK) {
-                // Get the URI that points to the selected contact
-                Uri contactUri = data.getData();
-                // We only need the NUMBER column, because there will be only one row in the result
-                String[] projection = {ContactsContract.CommonDataKinds.Phone.NUMBER};
 
-                // Perform the query on the contact to get the NUMBER column
-                // We don't need a selection or sort order (there's only one result for the given URI)
-                // CAUTION: The query() method should be called from a separate thread to avoid blocking
-                // your app's UI thread. (For simplicity of the sample, this code doesn't do that.)
-                // Consider using CursorLoader to perform the query.????
-                Cursor cursor = getContentResolver()
-                        .query(contactUri, projection, null, null, null);
-                cursor.moveToFirst();
 
-                // Retrieve the phone number from the NUMBER column
-                int column = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
-                String number = cursor.getString(column);
-                String cleanedNumber = cleanPhoneNumber(number);
-                Toast.makeText(this, number, Toast.LENGTH_SHORT).show();
-                Toast.makeText(this, cleanedNumber, Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
 
-    //currently only implemented for North American phone numbers
-    private String cleanPhoneNumber(String dirtyNumber)
-    {
-        String formattedNumber;
-        int dirtyLength = dirtyNumber.length();
-        StringBuilder mStringBuilder = new StringBuilder("+");
-        Character mCharacter;
-        for(int i=0; i <dirtyLength; i++)
-        {
-            mCharacter = dirtyNumber.charAt(i);
-            if(Character.isDigit(mCharacter)) {
-                mStringBuilder.append(mCharacter);
-            }
-        }
-        if(mStringBuilder.length()==11) { //it is missing the country code
-            mStringBuilder.insert(1, Constants.AREA_CODE_NORTH_AMERICA);
-        }
-        formattedNumber = mStringBuilder.toString();
-        return formattedNumber;
-
-    }
 public void onDestroy() {
     super.onDestroy();
     if(mReceiver!=null) {

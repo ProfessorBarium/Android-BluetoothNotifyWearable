@@ -6,4 +6,5 @@ package com.ilovescience.bluetoothnotifitywearable;
 public class Constants {
     protected static final String KEY_SENDER = "incomingSMSnumber";
     protected static final Character AREA_CODE_NORTH_AMERICA = '1';
+    protected static final int PICK_CONTACT_REQUEST = 1;
 }
