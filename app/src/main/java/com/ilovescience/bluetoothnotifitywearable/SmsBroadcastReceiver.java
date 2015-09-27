@@ -68,11 +68,11 @@ public class SmsBroadcastReceiver extends BroadcastReceiver {
             if(myContactNumbers.contains(smsAddress))
             {
                 Intent myIntent = new Intent(mContext, ConfigurationActivity.class);
-                myIntent.putExtra(Constants.KEY_SENDER,smsAddress);
+                myIntent.putExtra(Constants.KEY_SENDER, smsAddress);
                 myIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 mContext.startActivity(myIntent);
             }
-            else {
+/*            else {
                 Integer count = myContactNumbers.size();
                 String testString = count.toString();
                 String[] aStrings = new String[myContactNumbers.size()];
@@ -87,7 +87,7 @@ public class SmsBroadcastReceiver extends BroadcastReceiver {
 
                 //inst.updateList(smsMessageStr);
                 //inst.checkSender(context,firstMessage);
-            }
+            }*/
 
         }
     }

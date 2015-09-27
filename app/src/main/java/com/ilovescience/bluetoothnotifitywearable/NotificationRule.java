@@ -5,6 +5,63 @@ package com.ilovescience.bluetoothnotifitywearable;
  */
 public class NotificationRule {
     private String mContactName;
+
+    public String getmContactName() {
+        return mContactName;
+    }
+
+    public void setmContactName(String mContactName) {
+        this.mContactName = mContactName;
+    }
+
+    public String getmPhoneNumber() {
+        return mPhoneNumber;
+    }
+
+    public void setmPhoneNumber(String mPhoneNumber) {
+        this.mPhoneNumber = mPhoneNumber;
+    }
+
+    public String getmEmailAddress() {
+        return mEmailAddress;
+    }
+
+    public void setmEmailAddress(String mEmailAddress) {
+        this.mEmailAddress = mEmailAddress;
+    }
+
+    public String getmKeyword() {
+        return mKeyword;
+    }
+
+    public void setmKeyword(String mKeyword) {
+        this.mKeyword = mKeyword;
+    }
+
+    public String getmPwmCommand() {
+        return mPwmCommand;
+    }
+
+    public void setmPwmCommand(String mPwmCommand) {
+        this.mPwmCommand = mPwmCommand;
+    }
+
+    public int getmVibrationPattern() {
+        return mVibrationPattern;
+    }
+
+    public void setmVibrationPattern(int mVibrationPattern) {
+        this.mVibrationPattern = mVibrationPattern;
+    }
+
+    public int getmVibrationDuration() {
+        return mVibrationDuration;
+    }
+
+    public void setmVibrationDuration(int mVibrationDuration) {
+        this.mVibrationDuration = mVibrationDuration;
+    }
+
     private String mPhoneNumber;
     private String mEmailAddress;
     private String mKeyword;

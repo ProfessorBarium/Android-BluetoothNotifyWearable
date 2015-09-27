@@ -1,12 +1,15 @@
 package com.ilovescience.bluetoothnotifitywearable;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Contacts;
 import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.Menu;
@@ -16,6 +19,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Sam on 9/22/2015.
@@ -30,9 +37,9 @@ public class RuleEditActivity extends Activity{
 
     Context mContext;
     EditText personName;
-    EditText phone;
-    EditText email;
-    EditText keyword;
+    EditText phoneInput;
+    EditText emailInput;
+    EditText keywordInput;
     Spinner vibrateTypeSpinner;
     Spinner vibrateDurationSpinner;
     Spinner colorSpinner;
@@ -47,9 +54,9 @@ public class RuleEditActivity extends Activity{
         setContentView(R.layout.activity_rule);
         mContext = this;
         personName = (EditText)findViewById(R.id.editText_contact_name);
-        phone = (EditText)findViewById(R.id.editText_contact_phone);
-        email = (EditText)findViewById(R.id.editText_contact_email);
-        keyword = (EditText)findViewById(R.id.editText_keyword);
+        phoneInput = (EditText)findViewById(R.id.editText_contact_phone);
+        emailInput = (EditText)findViewById(R.id.editText_contact_email);
+        keywordInput = (EditText)findViewById(R.id.editText_keyword);
         vibrateTypeSpinner = (Spinner)findViewById(R.id.spinner_buzz_type);
         vibrateDurationSpinner = (Spinner)findViewById(R.id.spinner_duration);
         colorSpinner = (Spinner)findViewById(R.id.spinner_Color);
@@ -72,8 +79,19 @@ public class RuleEditActivity extends Activity{
 
         buttonGetContact.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent openContactsIntent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI); //not sure what this does..
+              /*  Intent openContactsIntent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI); //not sure what this does..
+                startActivityForResult(openContactsIntent,Constants.PICK_CONTACT_REQUEST);*/
                 pickContact();
+            }
+        });
+
+        buttonSetRule.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+              /*  Intent openContactsIntent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI); //not sure what this does..
+                startActivityForResult(openContactsIntent,Constants.PICK_CONTACT_REQUEST);*/
+               NotificationRule myRule = new NotificationRule(personName.getText().toString(),phoneInput.getText().toString(),emailInput.getText().toString(),keywordInput.getText().toString());
+                Toast.makeText(mContext,myRule.getmContactName(),Toast.LENGTH_LONG).show();
+
             }
         });
 
@@ -81,17 +99,20 @@ public class RuleEditActivity extends Activity{
     private void pickContact()
     {
         //Intent pickContactIntent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
-        Intent pickContactIntent = new Intent(Intent.ACTION_PICK, Uri.parse("content://contacts"));
-        pickContactIntent.setType(ContactsContract.CommonDataKinds.Phone.CONTENT_TYPE); // Show user only contacts w/ phone numbers
-        startActivityForResult(pickContactIntent, Constants.PICK_CONTACT_REQUEST);
+        //Intent pickContactIntent = new Intent(Intent.ACTION_PICK, Uri.parse("content://contacts"));
+        //pickContactIntent.setType(ContactsContract.CommonDataKinds.Email.CONTENT_TYPE); // Show user only contacts w/ phone numbers
+        //pickContactIntent.setTypeAndNormalize(ContactsContract.Contacts.CONTENT_TYPE);
+        //startActivityForResult(pickContactIntent, Constants.PICK_CONTACT_REQUEST);
+        Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
+        startActivityForResult(intent, Constants.PICK_CONTACT_REQUEST);
     }
 
-    @Override
+/*    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // Check which request we're responding to
         if (resultCode == RESULT_OK) {
             if (requestCode == Constants.PICK_CONTACT_REQUEST) {
-         /*       Cursor cursor = null;
+                Cursor cursor = null;
                 String sEmail="";
                 String sName="";
 
@@ -105,14 +126,11 @@ public class RuleEditActivity extends Activity{
                     int nameID = cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME);
                     int emailIdx = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Email.DATA);
 
-                    if (cursor.moveToFirst())
-                    {
+
                         sEmail = cursor.getString(emailIdx);
                         sName = cursor.getString(nameID);
-                    }
-                    else{
-                        Log.w("MY DEBUGTAG", "No results");
-                    }
+
+
                 }catch (Exception e){
                     Log.e("MY DEBUGTAG","Failed to get email data", e);
                 }
@@ -130,7 +148,7 @@ public class RuleEditActivity extends Activity{
                     }
 
                 }
-*/
+
                 // Get the URI that points to the selected contact
                 Uri contactUri = data.getData();
                 String temp = phoneFromUri(contactUri);
@@ -140,16 +158,85 @@ public class RuleEditActivity extends Activity{
                 String name = nameFromUri(contactUri);
                 personName.setText(name);
 
-               String myEmail = emailFromUri(contactUri);
-                email.setText(myEmail);
+ *//*              String myEmail = emailFromUri(contactUri);
+                email.setText(myEmail);*//*
+
                 keyword.setText("@urgent");
 
             }
         }else{
             Log.w("DEBUG_TAG", "Warning: activity result not ok");
         }
-    }
+    }*/
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // Check which request we're responding to
+        if (resultCode == RESULT_OK) {
+            if (requestCode == Constants.PICK_CONTACT_REQUEST) {
+
+                Cursor cursor = null;
+                String phoneNumber = "";
+                List<String> allNumbers = new ArrayList<String>();
+                int phoneIdx = 0;
+                try {
+                    Uri result = data.getData();
+                    personName.setText(nameFromUri(result));
+                    //TODO: impliment email in the same way as phone, to give options.
+                    emailInput.setText(getEmailFromUri(result));
+
+                    //find contact id that was selected - unique integer value
+                    String id = result.getLastPathSegment();
+
+                    cursor = getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, ContactsContract.CommonDataKinds.Phone.CONTACT_ID + "=?", new String[] { id }, null);
+                    phoneIdx = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DATA);
+                    if (cursor.moveToFirst()) {
+                        while (cursor.isAfterLast() == false) {
+                            phoneNumber = cursor.getString(phoneIdx);
+                            allNumbers.add(phoneNumber);
+                            cursor.moveToNext();
+                        }
+                    } else {
+                        //no results actions
+                    }
+                } catch (Exception e) {
+                    //error actions
+                } finally {
+                    if (cursor != null) {
+                        cursor.close();
+                    }
+
+                    final CharSequence[] items = allNumbers.toArray(new String[allNumbers.size()]);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(RuleEditActivity.this);
+                    builder.setTitle("Choose a number");
+                    builder.setItems(items, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int item) {
+                            String selectedNumber = items[item].toString();
+                            //selectedNumber = selectedNumber.replace("-", "");
+                            phoneInput.setText(cleanPhoneNumber(selectedNumber));
+                        }
+                    });
+                    AlertDialog alert = builder.create();
+                    if(allNumbers.size() > 1) {
+                        alert.show();
+                    } else {
+                        String selectedNumber = phoneNumber.toString();
+                        selectedNumber = selectedNumber.replace("-", "");
+                        phoneInput.setText(selectedNumber);
+                    }
+
+                    if (phoneNumber.length() == 0) {
+                        //no numbers found actions
+                    }
+
+                }
+
+            }
+        } else {
+            //activity result error actions
+        }
+
+    }
 
 
 
@@ -187,6 +274,25 @@ public class RuleEditActivity extends Activity{
         String number = cursor.getString(column);
         cursor.close();
         return number;
+    }
+
+    private String getEmailFromUri(Uri contactUri)
+    {
+        String id = contactUri.getLastPathSegment();
+        int emailIndex = 0;
+        String foundEmail = id;
+
+        //Toast.makeText(this, id,Toast.LENGTH_LONG).show();
+        Cursor cursor = null;
+        cursor = getContentResolver().query(ContactsContract.CommonDataKinds.Email.CONTENT_URI, null, ContactsContract.CommonDataKinds.Email.CONTACT_ID + "=?", new String[] { id }, null);
+        if (cursor.moveToFirst()) {
+
+                foundEmail = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Email.DATA));
+
+
+        }
+        return foundEmail;
+
     }
 
     private String emailFromUri(Uri contactUri) {
