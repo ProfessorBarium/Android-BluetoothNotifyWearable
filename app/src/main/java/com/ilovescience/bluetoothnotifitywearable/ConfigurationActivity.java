@@ -1,6 +1,7 @@
 package com.ilovescience.bluetoothnotifitywearable;
 
 
+import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothGatt;
@@ -19,7 +20,7 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.ContactsContract;
-import android.support.v7.app.AppCompatActivity;
+
 import android.os.Bundle;
 import android.telephony.SmsMessage;
 import android.util.Log;
@@ -36,7 +37,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class ConfigurationActivity extends AppCompatActivity  {
+public class ConfigurationActivity extends Activity {
     //private static Other inst;
     SharedPreferences sharedPref;
     SharedPreferences.Editor editor;
@@ -291,7 +292,7 @@ public boolean setBluetooth(boolean enable) {
         contactIndex = myPhoneNumbers.size();//number of elements stored
         return contactIndex;
     }
-    @Override
+ /*   @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_configuration, menu);
@@ -319,7 +320,7 @@ public boolean setBluetooth(boolean enable) {
 //        }
 
         return super.onOptionsItemSelected(item);
-    }
+    }*/
 
 //listens for changes to the state of BluetoothAdapter. When app starts and !BluetoothAdapter.isEnabled(), wait until STATE_ON to trigger the connection
 

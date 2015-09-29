@@ -204,7 +204,7 @@ public class TumakuBLE {
 	}
 
 	public void discoverServices() {
-		if (Constant.DEBUG)
+		if (Constants.DEBUG)
 			Log.i("JMG", "Scanning services and caracteristics");
 		mGatt.discoverServices(); 
 	}
@@ -214,7 +214,7 @@ public class TumakuBLE {
 			try{
 				mGatt.disconnect();
 				mGatt.close();
-				if (Constant.DEBUG)
+				if (Constants.DEBUG)
 					Log.i("JMG", "Disconnecting GATT");
 			} catch(Exception ex){};
 		}
@@ -238,7 +238,7 @@ public class TumakuBLE {
 				}											
 			}
 		}
-		if(Constant.DEBUG)
+		if(Constants.DEBUG)
 			Log.i("JMG", "Characterisctic not found. Service: " + serviceUUID + " Characterisctic: " + characteristicUUID);
 		return null;
 	}
@@ -249,7 +249,7 @@ public class TumakuBLE {
 		if(characteristic!=null){
 			mGatt.readCharacteristic(characteristic);
 		} else {
-			if(Constant.DEBUG) Log.i("JMG", "Read Characteristic not found in device");
+			if(Constants.DEBUG) Log.i("JMG", "Read Characteristic not found in device");
 		}
 
 	}
@@ -263,9 +263,9 @@ public class TumakuBLE {
 		if(characteristic!=null){
 			characteristic.setValue(data);
 			mGatt.writeCharacteristic(characteristic);
-			if(Constant.DEBUG) Log.i("JMG", "Write Characteristic " + characteristicUUID + " with value " + data);
+			if(Constants.DEBUG) Log.i("JMG", "Write Characteristic " + characteristicUUID + " with value " + data);
 		} else {
-			if(Constant.DEBUG) Log.i("JMG", "Write Characteristic not found in device");
+			if(Constants.DEBUG) Log.i("JMG", "Write Characteristic not found in device");
 		}
 		
 	}
@@ -282,9 +282,9 @@ public class TumakuBLE {
 			    config.setValue(BluetoothGattDescriptor.DISABLE_NOTIFICATION_VALUE);
 		    }
 		    mGatt.writeDescriptor(config); //Enabled remotely		    
-			if(Constant.DEBUG) Log.i("JMG", "Write Characteristic Notification " + characteristicUUID + " with value " + notificationFlag);
+			if(Constants.DEBUG) Log.i("JMG", "Write Characteristic Notification " + characteristicUUID + " with value " + notificationFlag);
 		} else {
-			if(Constant.DEBUG) Log.i("JMG", "Write Characteristic not found in device");
+			if(Constants.DEBUG) Log.i("JMG", "Write Characteristic not found in device");
 		}
 
 	    
@@ -303,9 +303,9 @@ public class TumakuBLE {
 			    config.setValue(BluetoothGattDescriptor.DISABLE_NOTIFICATION_VALUE);
 		    }
 		    mGatt.writeDescriptor(config); //Enabled remotely		    
-			if(Constant.DEBUG) Log.i("JMG", "Write Characteristic Notification " + characteristicUUID + " with value " + indicationFlag);
+			if(Constants.DEBUG) Log.i("JMG", "Write Characteristic Notification " + characteristicUUID + " with value " + indicationFlag);
 		} else {
-			if(Constant.DEBUG) Log.i("JMG", "Write Characteristic not found in device");
+			if(Constants.DEBUG) Log.i("JMG", "Write Characteristic not found in device");
 		}
 
 	    
@@ -403,7 +403,7 @@ public class TumakuBLE {
 			super.onConnectionStateChange(gatt, status, newState);
 			
 			
-			if(Constant.DEBUG){
+			if(Constants.DEBUG){
 				if (status!=0) {
 					Log.i("JMG", "Error status received onConnectionStateChange: " + status + " - New state: " + newState);
 				} else {
@@ -413,7 +413,7 @@ public class TumakuBLE {
 			}
 			
 			if ((status==133)||(status==257)) {
-				if(Constant.DEBUG)
+				if(Constants.DEBUG)
 					Log.i("JMG", "Unrecoverable error 133 or 257. DEVICE_DISCONNECTED intent broadcast with full reset");
 				Intent intent = new Intent(DEVICE_DISCONNECTED);
 				intent.putExtra(EXTRA_FULL_RESET, EXTRA_FULL_RESET);				
@@ -423,7 +423,7 @@ public class TumakuBLE {
 							
 			if (newState== BluetoothProfile.STATE_CONNECTED&&status== BluetoothGatt.GATT_SUCCESS){ //Connected
 				    mGatt=gatt;
-					if(Constant.DEBUG)
+					if(Constants.DEBUG)
 						Log.i("JMG", "New connected Device. DEVICE_CONNECTED intent broadcast");
 					Intent intent = new Intent(DEVICE_CONNECTED);
 					intent.putExtra(EXTRA_ADDRESS, gatt.getDevice().getAddress());
@@ -432,13 +432,13 @@ public class TumakuBLE {
 			}
 			
 			if (newState== BluetoothProfile.STATE_DISCONNECTED&&status== BluetoothGatt.GATT_SUCCESS){ //Connected
-				if(Constant.DEBUG)
+				if(Constants.DEBUG)
 					Log.i("JMG", "Disconnected Device. DEVICE_DISCONNECTED intent broadcast");
 				Intent intent = new Intent(DEVICE_DISCONNECTED);
 				mContext.sendBroadcast(intent);			
 				return;
 			}
-			if(Constant.DEBUG)
+			if(Constants.DEBUG)
 				Log.i("JMG", "Unknown values received onConnectionStateChange. Status: " + status + " - New state: " + newState);
 		}
 
@@ -453,7 +453,7 @@ public class TumakuBLE {
 		public void onCharacteristicWrite(BluetoothGatt gatt,
 				BluetoothGattCharacteristic characteristic, int status) {
 			super.onCharacteristicWrite(gatt, characteristic, status);
-			if(Constant.DEBUG){
+			if(Constants.DEBUG){
 				if(status==0){
 					Log.i("JMG", "Write success ,characteristic uuid=:" + characteristic.getUuid().toString());
 				}else{
@@ -470,7 +470,7 @@ public class TumakuBLE {
 		public void onCharacteristicRead(BluetoothGatt gatt,
 				BluetoothGattCharacteristic characteristic, int status) {
 			super.onCharacteristicRead(gatt, characteristic, status);
-			if(Constant.DEBUG) {
+			if(Constants.DEBUG) {
 				if(status==0){
 					Log.i("JMG", "Read from:" + characteristic.getUuid().toString() + " value: " + bytesToString(characteristic.getValue()));
 				} else {
@@ -489,7 +489,7 @@ public class TumakuBLE {
 		public void onCharacteristicChanged(BluetoothGatt gatt,
 				BluetoothGattCharacteristic characteristic) {
 			super.onCharacteristicChanged(gatt, characteristic);
-			if(Constant.DEBUG){
+			if(Constants.DEBUG){
 				//Log.i("JMG", "NOTIFICATION onCharacteristicChanged for characteristic " + uuid + 
 				//		" value: " + bytesToString(characteristic.getValue()));
 			}
@@ -504,17 +504,17 @@ public class TumakuBLE {
 		@Override
 		public void  onServicesDiscovered(BluetoothGatt gatt, int status) {
 			super.onServicesDiscovered(gatt, status);
-			if(Constant.DEBUG)
+			if(Constants.DEBUG)
 				Log.i("JMG", "onServicesDiscovered status: " + status);
 			
 			for(BluetoothGattService serviceInList: gatt.getServices()){
 				String serviceUUID=serviceInList.getUuid().toString();
 				ServiceType serviceType=new ServiceType(serviceInList);
 				List<BluetoothGattCharacteristic> characteristics= serviceType.getCharacteristics();
-				if(Constant.DEBUG)
+				if(Constants.DEBUG)
 					Log.i("JMG", "New service: " + serviceUUID);
 				for(BluetoothGattCharacteristic characteristicInList : serviceInList.getCharacteristics()){
-					if(Constant.DEBUG)
+					if(Constants.DEBUG)
 						Log.i("JMG", "New characteristic: " + characteristicInList.getUuid().toString());
 					characteristics.add(characteristicInList);
 				}
@@ -530,7 +530,7 @@ public class TumakuBLE {
 		public void onDescriptorWrite(BluetoothGatt gatt,
 				BluetoothGattDescriptor descriptor, int status) {
 			super.onDescriptorWrite(gatt, descriptor, status);
-			if(Constant.DEBUG)
+			if(Constants.DEBUG)
 				Log.i("JMG", "onDescriptorWrite " + descriptor.getUuid().toString() + " - characteristic: " +
 						descriptor.getCharacteristic().getUuid().toString() + " - Status: " + status);
 			Intent intent = new Intent(WRITE_DESCRIPTOR_SUCCESS);
