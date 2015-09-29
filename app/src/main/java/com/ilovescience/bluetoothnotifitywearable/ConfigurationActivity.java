@@ -23,6 +23,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.telephony.SmsMessage;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -40,6 +41,7 @@ public class ConfigurationActivity extends AppCompatActivity  {
     SharedPreferences sharedPref;
     SharedPreferences.Editor editor;
     Set<String> myContactNumbers;
+    Set<NotificationRule> myRules; //maybe this should be an arrayList???
     Button addContact;
     Button addKeywordtext;
     Button addKeywordEmail;
@@ -69,7 +71,7 @@ public class ConfigurationActivity extends AppCompatActivity  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_configuration);
         final Context context = this;
-        sharedPref = context.getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        sharedPref = context.getSharedPreferences(Constants.SHARED_PREFERENCES_KEY, Context.MODE_PRIVATE);
         editor = sharedPref.edit();
 
         mContext = this;

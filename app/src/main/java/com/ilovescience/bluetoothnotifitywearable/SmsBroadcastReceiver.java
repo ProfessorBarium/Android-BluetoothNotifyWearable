@@ -60,10 +60,9 @@ public class SmsBroadcastReceiver extends BroadcastReceiver {
 
             //Toast.makeText(context, smsMessageStr, Toast.LENGTH_SHORT).show();
             //ConfigurationActivity inst = new ConfigurationActivity();
-            String prefKey = mContext.getString(R.string.preference_file_key); //not sure why I can't call this inside getSharedPreferences...???
-            String callerString = mContext.getString(R.string.my_set_saved_Callers); //not sure why I can't call this inside getSharedPreferences...???
+           String callerString = mContext.getString(R.string.my_set_saved_Callers); //not sure why I can't call this inside getSharedPreferences...???
 
-            sharedPref = mContext.getSharedPreferences(prefKey, Context.MODE_PRIVATE);
+            sharedPref = mContext.getSharedPreferences(Constants.SHARED_PREFERENCES_KEY, Context.MODE_PRIVATE);
             myContactNumbers = sharedPref.getStringSet(callerString, new HashSet<String>());//Retrieve the saved list of phone Numbers
             if(myContactNumbers.contains(smsAddress))
             {
@@ -72,7 +71,7 @@ public class SmsBroadcastReceiver extends BroadcastReceiver {
                 myIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 mContext.startActivity(myIntent);
             }
-/*            else {
+           else {
                 Integer count = myContactNumbers.size();
                 String testString = count.toString();
                 String[] aStrings = new String[myContactNumbers.size()];
@@ -87,7 +86,7 @@ public class SmsBroadcastReceiver extends BroadcastReceiver {
 
                 //inst.updateList(smsMessageStr);
                 //inst.checkSender(context,firstMessage);
-            }*/
+            }
 
         }
     }

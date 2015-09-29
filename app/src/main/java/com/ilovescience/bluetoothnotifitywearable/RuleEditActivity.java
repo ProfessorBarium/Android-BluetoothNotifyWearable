@@ -107,67 +107,6 @@ public class RuleEditActivity extends Activity{
         startActivityForResult(intent, Constants.PICK_CONTACT_REQUEST);
     }
 
-/*    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        // Check which request we're responding to
-        if (resultCode == RESULT_OK) {
-            if (requestCode == Constants.PICK_CONTACT_REQUEST) {
-                Cursor cursor = null;
-                String sEmail="";
-                String sName="";
-
-                try{
-                    Uri result= data.getData();
-                    Log.v("DEBUG_TAG", "Got a contact result: " + result.toString());
-                    String id = result.getLastPathSegment();
-
-                    cursor = getContentResolver()
-                            .query(ContactsContract.CommonDataKinds.Email.CONTENT_URI,null, ContactsContract.CommonDataKinds.Email.CONTACT_ID + "/?",new String[] {id},null);
-                    int nameID = cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME);
-                    int emailIdx = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Email.DATA);
-
-
-                        sEmail = cursor.getString(emailIdx);
-                        sName = cursor.getString(nameID);
-
-
-                }catch (Exception e){
-                    Log.e("MY DEBUGTAG","Failed to get email data", e);
-                }
-                finally{
-                    if(cursor!=null)
-                    {
-                        cursor.close();
-                    }
-                    email.setText(sEmail);
-                    personName.setText(sName);
-
-                    if (sEmail.length() == 0 && sName.length() == 0)
-                    {
-                        Toast.makeText(this, "No Email for Selected Contact",Toast.LENGTH_LONG).show();
-                    }
-
-                }
-
-                // Get the URI that points to the selected contact
-                Uri contactUri = data.getData();
-                String temp = phoneFromUri(contactUri);
-                String cleanedNumber = cleanPhoneNumber(temp);
-                phone.setText(cleanedNumber);
-
-                String name = nameFromUri(contactUri);
-                personName.setText(name);
-
- *//*              String myEmail = emailFromUri(contactUri);
-                email.setText(myEmail);*//*
-
-                keyword.setText("@urgent");
-
-            }
-        }else{
-            Log.w("DEBUG_TAG", "Warning: activity result not ok");
-        }
-    }*/
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -182,6 +121,7 @@ public class RuleEditActivity extends Activity{
                 try {
                     Uri result = data.getData();
                     personName.setText(nameFromUri(result));
+
                     //TODO: impliment email in the same way as phone, to give options.
                     emailInput.setText(getEmailFromUri(result));
 
@@ -228,9 +168,7 @@ public class RuleEditActivity extends Activity{
                     if (phoneNumber.length() == 0) {
                         //no numbers found actions
                     }
-
                 }
-
             }
         } else {
             //activity result error actions

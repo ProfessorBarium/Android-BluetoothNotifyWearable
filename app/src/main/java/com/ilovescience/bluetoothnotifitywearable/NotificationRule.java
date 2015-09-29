@@ -6,6 +6,39 @@ package com.ilovescience.bluetoothnotifitywearable;
 public class NotificationRule {
     private String mContactName;
 
+
+
+    private String mPhoneNumber;
+    private String mEmailAddress;
+    private String mKeyword;
+    private String mPwmCommand;
+    private int mVibrationPattern;
+    private int mVibrationDuration;
+
+    private boolean usesKeyword;
+
+
+    public NotificationRule(String contactName)
+    {
+        mContactName=contactName;
+    }
+
+    public NotificationRule(String contactName,String phoneNumber,String emailAddress )
+    {
+        mContactName=contactName;
+        mPhoneNumber=phoneNumber;
+        mEmailAddress=emailAddress;
+        usesKeyword = false;
+    }
+    public NotificationRule(String contactName,String phoneNumber,String emailAddress,String sKeyword )
+    {
+        mContactName=contactName;
+        mPhoneNumber=phoneNumber;
+        mEmailAddress=emailAddress;
+        mKeyword=sKeyword;
+        usesKeyword = true;
+    }
+
     public String getmContactName() {
         return mContactName;
     }
@@ -61,36 +94,5 @@ public class NotificationRule {
     public void setmVibrationDuration(int mVibrationDuration) {
         this.mVibrationDuration = mVibrationDuration;
     }
-
-    private String mPhoneNumber;
-    private String mEmailAddress;
-    private String mKeyword;
-    private String mPwmCommand;
-    private int mVibrationPattern;
-    private int mVibrationDuration;
-
-
-
-    public NotificationRule(String contactName)
-    {
-        mContactName=contactName;
-    }
-
-    public NotificationRule(String contactName,String phoneNumber,String emailAddress )
-    {
-        mContactName=contactName;
-        mPhoneNumber=phoneNumber;
-        mEmailAddress=emailAddress;
-    }
-    public NotificationRule(String contactName,String phoneNumber,String emailAddress,String sKeyword )
-    {
-        mContactName=contactName;
-        mPhoneNumber=phoneNumber;
-        mEmailAddress=emailAddress;
-        mKeyword=sKeyword;
-
-    }
-
-
 
 }

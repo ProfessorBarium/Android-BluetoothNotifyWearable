@@ -7,6 +7,7 @@
     <uses-permission android:name="android.permission.BLUETOOTH_PRIVILEGED" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
     <uses-permission android:name="android.permission.READ_CONTACTS"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -30,11 +31,19 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.ilovescience.bluetoothnotifitywearable.ConfigurationActivity"/>
             </activity>
+
         <receiver android:name=".SmsBroadcastReceiver" android:exported="true" >
-            <intent-filter android:priority="999" >
+            <intent-filter android:priority="900" >
                 <action android:name="android.provider.Telephony.SMS_RECEIVED" />
             </intent-filter>
         </receiver>
+        <receiver android:name=".CallReceiver">                     <!-- 6 -->
+            <intent-filter android:priority="900">                                                   <!-- 7 -->
+                <action android:name="android.intent.action.PHONE_STATE"/>   <!-- 8 -->
+            </intent-filter>
+        </receiver>
+
+
     </application>
 
 </manifest>
