@@ -1,6 +1,6 @@
 package com.ilovescience.bluetoothnotifitywearable;
 
-
+import com.google.gson.Gson;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -36,6 +36,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
 
 public class ConfigurationActivity extends Activity {
     //private static Other inst;

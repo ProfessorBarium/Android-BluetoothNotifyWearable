@@ -8,4 +8,6 @@ public class Constants {
     protected static final Character AREA_CODE_NORTH_AMERICA = '1';
     protected static final int PICK_CONTACT_REQUEST = 1;
     protected static final String SHARED_PREFERENCES_KEY = "com.ilovescience.bluetoothnotify.PREFERENCE_FILE_KEY";
+    protected static final Boolean DEBUG = true;
+    protected static final String KEY_RULES = "allRules";
 }

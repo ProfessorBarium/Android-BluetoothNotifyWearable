@@ -3,7 +3,7 @@ package com.ilovescience.bluetoothnotifitywearable;
 /**
  * Created by sbarnum on 9/24/2015.
  */
-public class NotificationRule {
+public class NotificationRule  {
     private String mContactName;
 
 

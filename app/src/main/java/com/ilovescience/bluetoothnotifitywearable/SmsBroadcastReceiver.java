@@ -14,6 +14,8 @@ import android.telephony.SmsMessage;
 import android.widget.Toast;
 
 
+import com.google.gson.Gson;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -60,10 +62,26 @@ public class SmsBroadcastReceiver extends BroadcastReceiver {
 
             //Toast.makeText(context, smsMessageStr, Toast.LENGTH_SHORT).show();
             //ConfigurationActivity inst = new ConfigurationActivity();
-           String callerString = mContext.getString(R.string.my_set_saved_Callers); //not sure why I can't call this inside getSharedPreferences...???
-
+           //String callerString = mContext.getString(R.string.my_set_saved_Callers); //not sure why I can't call this inside getSharedPreferences...???
+            //TODO:Create a class-wide reconstructRulesArray() method
             sharedPref = mContext.getSharedPreferences(Constants.SHARED_PREFERENCES_KEY, Context.MODE_PRIVATE);
-            myContactNumbers = sharedPref.getStringSet(callerString, new HashSet<String>());//Retrieve the saved list of phone Numbers
+            Set<String> myRules = sharedPref.getStringSet(Constants.KEY_RULES, new HashSet<String>());//Retrieve the saved list of phone Numbers
+            int ruleCount = myRules.size();
+            String[] ruleStringArray = myRules.toArray(new String[ruleCount]);
+            myContactNumbers = new HashSet<>();
+
+            NotificationRule[] myRulesObjects = new NotificationRule[ruleCount];
+
+            for (int i =0; i < ruleCount; i++)
+            {
+                myRulesObjects[i] = new Gson().fromJson(ruleStringArray[i],NotificationRule.class);
+                myContactNumbers.add(myRulesObjects[i].getmPhoneNumber());
+            }
+
+
+            //myContactNumbers = sharedPref.getStringSet(Constants.KEY_RULES, new HashSet<String>());//Retrieve the saved list of phone Numbers
+
+
             if(myContactNumbers.contains(smsAddress))
             {
                 Intent myIntent = new Intent(mContext, ConfigurationActivity.class);
@@ -72,7 +90,8 @@ public class SmsBroadcastReceiver extends BroadcastReceiver {
                 mContext.startActivity(myIntent);
             }
            else {
-                Integer count = myContactNumbers.size();
+                Toast.makeText(mContext, myRulesObjects[0].getmPhoneNumber(), Toast.LENGTH_SHORT).show();
+/*                Integer count = myContactNumbers.size();
                 String testString = count.toString();
                 String[] aStrings = new String[myContactNumbers.size()];
                 aStrings = myContactNumbers.toArray(aStrings);
@@ -81,12 +100,13 @@ public class SmsBroadcastReceiver extends BroadcastReceiver {
                 Toast.makeText(mContext, "Incoming address" + smsAddress, Toast.LENGTH_SHORT).show();
                 for (int i = 0; i < count; i++) {
 
-                    Toast.makeText(mContext, "Saved address" + aStrings[i], Toast.LENGTH_SHORT).show();
-                }
+                    Toast.makeText(mContext, "Saved address" + aStrings[i], Toast.LENGTH_SHORT).show();*/
+
 
                 //inst.updateList(smsMessageStr);
                 //inst.checkSender(context,firstMessage);
             }
+
 
         }
     }

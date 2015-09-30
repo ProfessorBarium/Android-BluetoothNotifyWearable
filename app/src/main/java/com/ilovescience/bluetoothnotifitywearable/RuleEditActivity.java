@@ -1,11 +1,13 @@
 package com.ilovescience.bluetoothnotifitywearable;
 
+import com.google.gson.Gson;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -22,7 +24,9 @@ import android.widget.Toast;
 
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by Sam on 9/22/2015.
@@ -35,6 +39,8 @@ public class RuleEditActivity extends Activity{
             ContactsContract.CommonDataKinds.Email.DATA
     };
 
+
+
     Context mContext;
     EditText personName;
     EditText phoneInput;
@@ -44,15 +50,24 @@ public class RuleEditActivity extends Activity{
     Spinner vibrateDurationSpinner;
     Spinner colorSpinner;
 
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
+
     Button buttonGetContact;
     Button buttonSetRule;
     Button buttonEraseRule;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rule);
         mContext = this;
+
+        sharedPreferences = mContext.getSharedPreferences(Constants.SHARED_PREFERENCES_KEY, Context.MODE_PRIVATE);
+        editor = sharedPreferences.edit();
+
         personName = (EditText)findViewById(R.id.editText_contact_name);
         phoneInput = (EditText)findViewById(R.id.editText_contact_phone);
         emailInput = (EditText)findViewById(R.id.editText_contact_email);
@@ -89,8 +104,16 @@ public class RuleEditActivity extends Activity{
             public void onClick(View v) {
               /*  Intent openContactsIntent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI); //not sure what this does..
                 startActivityForResult(openContactsIntent,Constants.PICK_CONTACT_REQUEST);*/
-               NotificationRule myRule = new NotificationRule(personName.getText().toString(),phoneInput.getText().toString(),emailInput.getText().toString(),keywordInput.getText().toString());
-                Toast.makeText(mContext,myRule.getmContactName(),Toast.LENGTH_LONG).show();
+
+                NotificationRule myRule = new NotificationRule(personName.getText().toString(),phoneInput.getText().toString(),emailInput.getText().toString(),keywordInput.getText().toString());
+                Set<String> previousRules = sharedPreferences.getStringSet(Constants.KEY_RULES, new HashSet<String>());;
+                String jsonString = new Gson().toJson(myRule);
+                previousRules.add(jsonString);
+
+                editor.putStringSet(Constants.KEY_RULES,previousRules);
+                editor.commit();
+
+                Toast.makeText(mContext,jsonString,Toast.LENGTH_LONG).show();
 
             }
         });
