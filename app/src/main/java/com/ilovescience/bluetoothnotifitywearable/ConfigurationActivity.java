@@ -44,15 +44,14 @@ public class ConfigurationActivity extends Activity {
     SharedPreferences.Editor editor;
     Set<String> myContactNumbers;
     Set<NotificationRule> myRules; //maybe this should be an arrayList???
-    Button addContact;
-    Button addKeywordtext;
-    Button addKeywordEmail;
+
+
     Button resetSharedPrefs;
     Button addBLEconnectionInfo;
     Button testAT;
     Button addRule;
-    EditText contactInput;
-    final static String myMacAddress = "B4:99:4C:68:4A:59";
+    //final static String myMacAddress = "B4:99:4C:68:4A:59";
+    String myMacAddress;
     //static final int PICK_CONTACT_REQUEST = 1;  // The request code
 
     Context mContext;
@@ -64,7 +63,7 @@ public class ConfigurationActivity extends Activity {
     private HM10 mHM10;
     //private BroadcastReceiver mAdapterReceiver;
     private String senderForRuleChecking;
-
+    private NotificationRule triggeringRule;
 
 
 
@@ -75,15 +74,13 @@ public class ConfigurationActivity extends Activity {
         final Context context = this;
         sharedPref = context.getSharedPreferences(Constants.SHARED_PREFERENCES_KEY, Context.MODE_PRIVATE);
         editor = sharedPref.edit();
-
         mContext = this;
 
-
-        addContact = (Button)findViewById(R.id.button_add_contact);
-        addKeywordtext = (Button)findViewById(R.id.button_add_keyword_text);
-        addKeywordEmail = (Button)findViewById(R.id.button_add_keyword_email_subj);
+        //addContact = (Button)findViewById(R.id.button_add_contact);
+       // addKeywordtext = (Button)findViewById(R.id.button_add_keyword_text);
+       // addKeywordEmail = (Button)findViewById(R.id.button_add_keyword_email_subj);
         resetSharedPrefs = (Button)findViewById(R.id.button_reset);
-        contactInput = (EditText)findViewById(R.id.editText_phone_contact);
+        //contactInput = (EditText)findViewById(R.id.editText_phone_contact);
         addBLEconnectionInfo = (Button)findViewById(R.id.button_AddBLEinfo);
         testAT = (Button)findViewById(R.id.button_AT_SEND);
         addRule = (Button)findViewById(R.id.button_NEW_RULE);
@@ -100,23 +97,7 @@ public class ConfigurationActivity extends Activity {
         myContactNumbers = sharedPref.getStringSet(getString(R.string.my_set_saved_Callers), new HashSet<String>());//Retrieve the saved list of phone Numbers
         //INDEX_CONTACT_SHARED_PREFS = getContactIndex(); //look this number up, ALSO in the preference file
 
-        addContact.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
 
-                //pickContact();
-
-                /*String newContactString = contactInput.getText().toString();
-                String testString;
-                String[] testStringArray;
-                Set<String> testSet;
-                setAddContact(newContactString);
-                contactInput.setText("");//clear the input
-                testSet = sharedPref.getStringSet(getString(R.string.my_set_saved_Callers), myContactNumbers);*/
-                //int testInt = testSet.size();rs);
-            }
-
-
-        });
 
         resetSharedPrefs.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -132,7 +113,7 @@ public class ConfigurationActivity extends Activity {
         addBLEconnectionInfo.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v) {
 
-            tryConnection();
+            //tryConnection();
                 //startScan();
 
             }
@@ -156,12 +137,38 @@ public class ConfigurationActivity extends Activity {
             }
         });
 
-        if (savedInstanceState == null) {
+        Bundle myExtras = getIntent().getExtras();
+        if(myExtras != null)
+        {
+            triggeringRule= new Gson().fromJson(myExtras.getString(Constants.KEY_TRIGGERING_RULE),NotificationRule.class);
+            Toast.makeText(this, "Triggering phone"+triggeringRule.getmPhoneNumber(), Toast.LENGTH_SHORT).show();
+            tryConnection();
+        }
+        else
+        {
+            Toast.makeText(this, "Does thins trigger on-load?", Toast.LENGTH_SHORT).show();
+        }
+
+        //TODO: figure out savedInstanceState;
+
+        if(myMacAddress == null)
+        {
+            myMacAddress = sharedPref.getString(Constants.KEY_BLUETOOTH_ADDRESS,"");
+        }
+        if(myMacAddress.length() ==0){
+            //myMacAddress = getBluetoothAddress();
+        }
+
+
+
+/*        if (savedInstanceState == null) {
             Bundle extras = getIntent().getExtras();
             if(extras == null) {
                 senderForRuleChecking= null;
+                triggeringRule = null;
             } else {
                 senderForRuleChecking= extras.getString(Constants.KEY_SENDER);
+
             }
         } else {
             senderForRuleChecking= (String) savedInstanceState.getSerializable(Constants.KEY_SENDER);
@@ -173,13 +180,10 @@ public class ConfigurationActivity extends Activity {
         }
         else {
             Toast.makeText(this, "KEY_SENDER Extra not found :(", Toast.LENGTH_SHORT).show();
-        }
+        }*/
 
 
     }
-
-
-
 
     private void tryConnection()
     {
@@ -194,9 +198,6 @@ public class ConfigurationActivity extends Activity {
             registerReceiver(mReceiver, filter);
         }
     }
-
-
-
 
 public void onDestroy() {
     super.onDestroy();
@@ -249,50 +250,13 @@ public boolean setBluetooth(boolean enable) {
         mHM10 = new HM10(macAddress,mContext);
     }
 
-
-    public void checkContactList(Context context, SmsMessage mySMS)
-    {
-        String address = mySMS.getOriginatingAddress();
-
-        if(address.equals("+16048162747")||address.equals("+16045625376"))
-        {
-            Toast.makeText(context, "BUZZZZ", Toast.LENGTH_SHORT).show();
-            //openApp(context,"com.tumaku.msmble");
-
-        }
-        else
-        {
-            Toast.makeText(context, "Poop", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    public void setAddContact(String contactNumber)
-    {
-        //better way to do this is probably to find the last item in the array, then append... consider an Object (struct?) type with all the info
-        //phone number, contact name, buzz, light, light colour, sharedPreferences name
-        //int nextAvailableIndex=i; //which digit is next
-        //Resources res = getResources();
-        //String[] phoneNumbers = res.getStringArray(R.array.caller_array);
-        //editor.putString(phoneNumbers[nextAvailableIndex], contactNumber);
-        //Set<String> myPhoneNumbers = sharedPref.getStringSet(getString(R.string.set_saved_Callers),new HashSet<String>());//Retrieve the saved list of phone Numbers
-        myContactNumbers.add(contactNumber);
-        editor.putStringSet(getString(R.string.my_set_saved_Callers),myContactNumbers); //duplicates not allowed, so sharedPrefs StringSet may be shorter than myContactNumbers
-        editor.commit();
-    }
     public void clearAllSharedPreferences()
     {
         editor.clear();
         editor.commit();
 
     }
-    public int getContactIndex()
-    {
-        int contactIndex;
-        //Set<String> nullSet = new HashSet<String>(){{}};
-        Set<String> myPhoneNumbers = sharedPref.getStringSet(getString(R.string.my_set_saved_Callers),new HashSet<String>());//Retrieve the saved list of phone Numbers
-        contactIndex = myPhoneNumbers.size();//number of elements stored
-        return contactIndex;
-    }
+
  /*   @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.

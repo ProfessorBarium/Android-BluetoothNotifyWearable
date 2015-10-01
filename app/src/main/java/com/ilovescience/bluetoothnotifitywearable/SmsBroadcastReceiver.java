@@ -5,6 +5,8 @@ package com.ilovescience.bluetoothnotifitywearable;
  * Adapted by Professor Barium on 9/2/2015.
  */
 
+import com.google.gson.Gson;
+
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -14,9 +16,11 @@ import android.telephony.SmsMessage;
 import android.widget.Toast;
 
 
-import com.google.gson.Gson;
 
+
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 
@@ -28,9 +32,12 @@ public class SmsBroadcastReceiver extends BroadcastReceiver {
     //private static Intent mIntent;
 
     SharedPreferences sharedPref;
-    Set<String> myContactNumbers;
+    //Set<String> myContactNumbers;
+    List<String> myContactNumbers;
     SharedPreferences.Editor editor;
     String smsAddress;
+    String smsBody;
+
 
 
 
@@ -50,7 +57,7 @@ public class SmsBroadcastReceiver extends BroadcastReceiver {
             for (int i = 0; i < sms.length; ++i) {
                 SmsMessage smsMessage = SmsMessage.createFromPdu((byte[]) sms[i]);
 
-                String smsBody = smsMessage.getMessageBody().toString();
+                smsBody = smsMessage.getMessageBody().toString();
                 smsAddress = smsMessage.getOriginatingAddress();
 
                 smsMessageStr += "SMS From: " + smsAddress + "\n";
@@ -63,12 +70,16 @@ public class SmsBroadcastReceiver extends BroadcastReceiver {
             //Toast.makeText(context, smsMessageStr, Toast.LENGTH_SHORT).show();
             //ConfigurationActivity inst = new ConfigurationActivity();
            //String callerString = mContext.getString(R.string.my_set_saved_Callers); //not sure why I can't call this inside getSharedPreferences...???
+
             //TODO:Create a class-wide reconstructRulesArray() method
             sharedPref = mContext.getSharedPreferences(Constants.SHARED_PREFERENCES_KEY, Context.MODE_PRIVATE);
-            Set<String> myRules = sharedPref.getStringSet(Constants.KEY_RULES, new HashSet<String>());//Retrieve the saved list of phone Numbers
-            int ruleCount = myRules.size();
-            String[] ruleStringArray = myRules.toArray(new String[ruleCount]);
-            myContactNumbers = new HashSet<>();
+            Set<String> myRulesSet = sharedPref.getStringSet(Constants.KEY_RULES, new HashSet<String>());//Retrieve the saved list of phone Numbers
+            List<String> myRulesList = new ArrayList<>(myRulesSet);
+            int ruleCount = myRulesSet.size();
+
+            String[] ruleStringArray = myRulesSet.toArray(new String[ruleCount]);
+
+            myContactNumbers = new ArrayList<>();
 
             NotificationRule[] myRulesObjects = new NotificationRule[ruleCount];
 
@@ -81,16 +92,25 @@ public class SmsBroadcastReceiver extends BroadcastReceiver {
 
             //myContactNumbers = sharedPref.getStringSet(Constants.KEY_RULES, new HashSet<String>());//Retrieve the saved list of phone Numbers
 
+            //returns -1 if not found
+            int ruleIndex = myContactNumbers.indexOf(smsAddress);
+            //int ruleIndex = myRulesList.indexOf(smsAddress);
 
-            if(myContactNumbers.contains(smsAddress))
+
+
+            if(ruleIndex != -1  && checkKeyword(myRulesObjects[ruleIndex]))
             {
+                String ruleAsString = new Gson().toJson(myRulesObjects[ruleIndex]);
                 Intent myIntent = new Intent(mContext, ConfigurationActivity.class);
-                myIntent.putExtra(Constants.KEY_SENDER, smsAddress);
+                //myIntent.putExtra(Constants.KEY_SENDER, smsAddress);
+                myIntent.putExtra(Constants.KEY_TRIGGERING_RULE_INDEX,ruleIndex);
+                myIntent.putExtra(Constants.KEY_TRIGGERING_RULE,ruleAsString);
                 myIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 mContext.startActivity(myIntent);
             }
            else {
-                Toast.makeText(mContext, myRulesObjects[0].getmPhoneNumber(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, "Rule conditions not met :(", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(mContext, myRulesObjects[0].getmPhoneNumber(), Toast.LENGTH_SHORT).show();
 /*                Integer count = myContactNumbers.size();
                 String testString = count.toString();
                 String[] aStrings = new String[myContactNumbers.size()];
@@ -111,5 +131,23 @@ public class SmsBroadcastReceiver extends BroadcastReceiver {
         }
     }
 
+    //Returns true if usesKeyword is false, or if true and keyword is present
+private boolean checkKeyword(NotificationRule thisRule)
+{
+    //not defined
+    if(thisRule.getmKeyword().length()==0) {
+        return true;
+    }
+    else if(smsBody.contains(thisRule.getmKeyword())) {
+        return  true;
+    }
+    else
+    {
+        return false;
+    }
+
+
+
+}
 
 }

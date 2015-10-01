@@ -15,9 +15,6 @@ public class NotificationRule  {
     private int mVibrationPattern;
     private int mVibrationDuration;
 
-    private boolean usesKeyword;
-
-
     public NotificationRule(String contactName)
     {
         mContactName=contactName;
@@ -28,7 +25,9 @@ public class NotificationRule  {
         mContactName=contactName;
         mPhoneNumber=phoneNumber;
         mEmailAddress=emailAddress;
-        usesKeyword = false;
+        mKeyword = "";
+        mVibrationPattern = 0;
+        mVibrationDuration=0;
     }
     public NotificationRule(String contactName,String phoneNumber,String emailAddress,String sKeyword )
     {
@@ -36,7 +35,8 @@ public class NotificationRule  {
         mPhoneNumber=phoneNumber;
         mEmailAddress=emailAddress;
         mKeyword=sKeyword;
-        usesKeyword = true;
+
+
     }
 
     public String getmContactName() {

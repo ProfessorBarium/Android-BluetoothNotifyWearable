@@ -184,8 +184,7 @@ public class RuleEditActivity extends Activity{
                         alert.show();
                     } else {
                         String selectedNumber = phoneNumber.toString();
-                        selectedNumber = selectedNumber.replace("-", "");
-                        phoneInput.setText(selectedNumber);
+                        phoneInput.setText(cleanPhoneNumber(selectedNumber));
                     }
 
                     if (phoneNumber.length() == 0) {

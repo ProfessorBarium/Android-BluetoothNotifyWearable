@@ -12,7 +12,7 @@
     <string name="add_keyword_email_subj">Add email keyword</string>
     <string name="my_set_saved_Callers">mySavedCallers</string>
     <string name="test_simulate_SMS">Test send</string>
-    <string name="bluetooth_setup">Add Bluetooth Address + Service + Characteristic</string>
+    <string name="bluetooth_setup">Pair Bluetooth Device</string>
     <string name="button_new_rule">Add a new Rule</string>
 
     <string name="phone_number_descriptor">Phone number with area code</string>
