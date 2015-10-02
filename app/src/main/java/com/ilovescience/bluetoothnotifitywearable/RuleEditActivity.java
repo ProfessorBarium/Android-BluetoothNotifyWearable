@@ -215,7 +215,7 @@ public class RuleEditActivity extends Activity{
         return name;
     }
 
-    private String phoneFromUri(Uri contactUri)
+ /*   private String phoneFromUri(Uri contactUri)
     {
         // We only need the NUMBER column, because there will be only one row in the result
         String[] projection = {ContactsContract.CommonDataKinds.Phone.NUMBER};
@@ -234,7 +234,7 @@ public class RuleEditActivity extends Activity{
         String number = cursor.getString(column);
         cursor.close();
         return number;
-    }
+    }*/
 
     private String getEmailFromUri(Uri contactUri)
     {
@@ -255,6 +255,7 @@ public class RuleEditActivity extends Activity{
 
     }
 
+/*
     private String emailFromUri(Uri contactUri) {
         //String[] projection = {ContactsContract.CommonDataKinds.Email.CONTACT_ID};
 
@@ -269,6 +270,7 @@ Cursor cursor = getContentResolver().
         String address = cursor.getString(column);
         return address;
     }
+*/
 
         //TO-DO: use one method to retreive all data, like this
 /*             ContentResolver cr = getContentResolver();
