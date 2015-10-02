@@ -101,12 +101,14 @@ public class SmsBroadcastReceiver extends BroadcastReceiver {
             if(ruleIndex != -1  && checkKeyword(myRulesObjects[ruleIndex]))
             {
                 String ruleAsString = new Gson().toJson(myRulesObjects[ruleIndex]);
-                Intent myIntent = new Intent(mContext, ConfigurationActivity.class);
+                Intent myIntent = new Intent(mContext, BLEConnectionService.class);
+                //Intent myIntent = new Intent(mContext, ConfigurationActivity.class);
                 //myIntent.putExtra(Constants.KEY_SENDER, smsAddress);
                 myIntent.putExtra(Constants.KEY_TRIGGERING_RULE_INDEX,ruleIndex);
                 myIntent.putExtra(Constants.KEY_TRIGGERING_RULE,ruleAsString);
                 myIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                mContext.startActivity(myIntent);
+                //mContext.startActivity(myIntent);
+                mContext.startService(myIntent);
             }
            else {
                 Toast.makeText(mContext, "Rule conditions not met :(", Toast.LENGTH_SHORT).show();

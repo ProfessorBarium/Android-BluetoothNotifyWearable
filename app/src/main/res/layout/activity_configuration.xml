@@ -11,22 +11,13 @@
         />
 
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/action_add_contact"
-        android:id="@+id/button_add_contact"
-        android:layout_below="@+id/textView2"
-        android:layout_alignParentStart="true" />
-
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="phone"
         android:ems="10"
         android:id="@+id/editText_phone_contact"
-        android:layout_alignTop="@+id/button_add_contact"
-        android:layout_toEndOf="@+id/button_add_contact" />
+        android:layout_below="@+id/textView2" />
 
     <Button
         android:layout_width="wrap_content"
@@ -34,7 +25,7 @@
         android:text="@string/reset_shared_prefs"
         android:id="@+id/button_reset"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/button_add_contact" />
+        android:layout_below="@+id/textView2" />
 
     <Button
         android:layout_width="wrap_content"
@@ -59,6 +50,17 @@
         android:id="@+id/button_NEW_RULE"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Paired with:"
+        android:id="@+id/textView5"
+        android:layout_below="@+id/button_reset"
+        android:layout_alignParentEnd="true"
+        android:layout_toEndOf="@+id/textView2"
+        android:layout_alignBottom="@+id/button_AddBLEinfo" />
 
 
 </RelativeLayout>

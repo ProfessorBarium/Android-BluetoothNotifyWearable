@@ -137,17 +137,17 @@ public class ConfigurationActivity extends Activity {
             }
         });
 
-        Bundle myExtras = getIntent().getExtras();
+  /*      Bundle myExtras = getIntent().getExtras();
         if(myExtras != null)
         {
             triggeringRule= new Gson().fromJson(myExtras.getString(Constants.KEY_TRIGGERING_RULE),NotificationRule.class);
-            Toast.makeText(this, "Triggering phone"+triggeringRule.getmPhoneNumber(), Toast.LENGTH_SHORT).show();
-            tryConnection();
+            //Toast.makeText(this, "Triggering phone"+triggeringRule.getmPhoneNumber(), Toast.LENGTH_SHORT).show();
+            //tryConnection();
         }
         else
         {
             Toast.makeText(this, "Does thins trigger on-load?", Toast.LENGTH_SHORT).show();
-        }
+        }*/
 
         //TODO: figure out savedInstanceState;
 
