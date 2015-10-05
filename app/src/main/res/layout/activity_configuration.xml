@@ -11,14 +11,6 @@
         />
 
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="phone"
-        android:ems="10"
-        android:id="@+id/editText_phone_contact"
-        android:layout_below="@+id/textView2" />
-
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -59,8 +51,16 @@
         android:id="@+id/textView5"
         android:layout_below="@+id/button_reset"
         android:layout_alignParentEnd="true"
-        android:layout_toEndOf="@+id/textView2"
+        android:layout_toEndOf="@+id/editText_phone_contact"
         android:layout_alignBottom="@+id/button_AddBLEinfo" />
+
+    <GridView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/grid_RULES_LAYOUT"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/button_AT_SEND"
+        android:layout_above="@+id/button_NEW_RULE" />
 
 
 </RelativeLayout>

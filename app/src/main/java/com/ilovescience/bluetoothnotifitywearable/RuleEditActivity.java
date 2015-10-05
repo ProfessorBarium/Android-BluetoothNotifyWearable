@@ -1,6 +1,6 @@
 package com.ilovescience.bluetoothnotifitywearable;
 
-import com.google.gson.Gson;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ContentResolver;
@@ -105,16 +105,22 @@ public class RuleEditActivity extends Activity{
               /*  Intent openContactsIntent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI); //not sure what this does..
                 startActivityForResult(openContactsIntent,Constants.PICK_CONTACT_REQUEST);*/
 
-                NotificationRule myRule = new NotificationRule(personName.getText().toString(),phoneInput.getText().toString(),emailInput.getText().toString(),keywordInput.getText().toString());
-                Set<String> previousRules = sharedPreferences.getStringSet(Constants.KEY_RULES, new HashSet<String>());;
-                String jsonString = new Gson().toJson(myRule);
-                previousRules.add(jsonString);
+                if(personName.getText().toString().length()>0) {
+                    NotificationRule myRule = new NotificationRule(personName.getText().toString(), phoneInput.getText().toString(), emailInput.getText().toString(), keywordInput.getText().toString());
+                    Set<String> previousRules = sharedPreferences.getStringSet(Constants.KEY_RULES, new HashSet<String>());
 
-                editor.putStringSet(Constants.KEY_RULES,previousRules);
-                editor.commit();
+                    //String jsonString = new Gson().toJson(myRule);
+                    String jsonString = myRule.makeGson();
+                    previousRules.add(jsonString);
 
-                Toast.makeText(mContext,jsonString,Toast.LENGTH_LONG).show();
+                    editor.putStringSet(Constants.KEY_RULES, previousRules);
+                    editor.commit();
 
+                    Toast.makeText(mContext, jsonString, Toast.LENGTH_LONG).show();
+                }
+                else{
+                    Toast.makeText(mContext, getResources().getString(R.string.warning_more_info), Toast.LENGTH_LONG).show();
+                }
             }
         });
 

@@ -1,5 +1,15 @@
 package com.ilovescience.bluetoothnotifitywearable;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+
+import com.google.gson.Gson;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 /**
  * Created by sbarnum on 9/24/2015.
  */
@@ -93,6 +103,29 @@ public class NotificationRule  {
 
     public void setmVibrationDuration(int mVibrationDuration) {
         this.mVibrationDuration = mVibrationDuration;
+    }
+
+    static protected NotificationRule[] reconstructRules(Context context)
+    {
+        SharedPreferences sharedPref = context.getSharedPreferences(Constants.SHARED_PREFERENCES_KEY, Context.MODE_PRIVATE);
+        Set<String> myRulesSet = sharedPref.getStringSet(Constants.KEY_RULES, new HashSet<String>());//Retrieve the saved list of phone Numbers
+        int ruleCount = myRulesSet.size();
+
+        String[] ruleStringArray = myRulesSet.toArray(new String[ruleCount]);
+
+        NotificationRule[] myRulesObjects = new NotificationRule[ruleCount];
+
+        for (int i =0; i < ruleCount; i++)
+        {
+            myRulesObjects[i] = new Gson().fromJson(ruleStringArray[i],NotificationRule.class);
+
+        }
+        return myRulesObjects;
+    }
+
+    String makeGson()
+    {
+        return new Gson().toJson(this);
     }
 
 }

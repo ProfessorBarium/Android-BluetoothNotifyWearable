@@ -8,6 +8,9 @@ import android.telephony.TelephonyManager;
 import android.view.KeyEvent;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Sam on 9/27/2015.
  */
@@ -22,8 +25,25 @@ public class CallReceiver extends BroadcastReceiver {
 
         if (TelephonyManager.EXTRA_STATE_RINGING.equals(state)) {                                   // 4
             String incomingNumber = intent.getStringExtra(TelephonyManager.EXTRA_INCOMING_NUMBER);  // 5
-            msg += ". Incoming number is " + incomingNumber;
-   /*         Intent answerReject = new Intent(context, AnswerCallActivity.class);
+            NotificationRule[] myRules = NotificationRule.reconstructRules(context);
+
+            List<String> myContactNumbers = new ArrayList<>();
+
+            for(int i =0; i<myRules.length; i++)
+            {
+                myContactNumbers.add(myRules[i].getmPhoneNumber());
+            }
+
+            int ruleIndex = myContactNumbers.indexOf(incomingNumber);
+
+            if(ruleIndex> -1)
+            {
+                BLEConnectionService.startBLEConnectionService(context,myRules[ruleIndex].makeGson());
+            }
+
+
+ /*           msg += ". Incoming number is " + incomingNumber;
+            Intent answerReject = new Intent(context, AnswerCallActivity.class);
             answerReject.putExtra(Constants.KEY_SENDER, incomingNumber);
             answerReject.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(answerReject);*/

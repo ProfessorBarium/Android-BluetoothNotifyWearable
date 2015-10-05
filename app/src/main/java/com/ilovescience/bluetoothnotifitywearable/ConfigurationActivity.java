@@ -30,6 +30,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.GridView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -50,7 +51,8 @@ public class ConfigurationActivity extends Activity {
     Button addBLEconnectionInfo;
     Button testAT;
     Button addRule;
-    //final static String myMacAddress = "B4:99:4C:68:4A:59";
+    GridView rulesGrid;
+    //String myMacAddress = "B4:99:4C:68:4A:59";
     String myMacAddress;
     //static final int PICK_CONTACT_REQUEST = 1;  // The request code
 
@@ -84,6 +86,7 @@ public class ConfigurationActivity extends Activity {
         addBLEconnectionInfo = (Button)findViewById(R.id.button_AddBLEinfo);
         testAT = (Button)findViewById(R.id.button_AT_SEND);
         addRule = (Button)findViewById(R.id.button_NEW_RULE);
+        rulesGrid = (GridView)findViewById(R.id.grid_RULES_LAYOUT);
 
         /*final BluetoothManager manager = (BluetoothManager)getSystemService(BLUETOOTH_SERVICE);
         mBluetoothAdapter = manager.getAdapter();*/
@@ -113,7 +116,7 @@ public class ConfigurationActivity extends Activity {
         addBLEconnectionInfo.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v) {
 
-            //tryConnection();
+            tryConnection();
                 //startScan();
 
             }
@@ -137,6 +140,9 @@ public class ConfigurationActivity extends Activity {
             }
         });
 
+
+        rulesGrid.setAdapter(new GridAdapter(this));
+
   /*      Bundle myExtras = getIntent().getExtras();
         if(myExtras != null)
         {
@@ -153,7 +159,7 @@ public class ConfigurationActivity extends Activity {
 
         if(myMacAddress == null)
         {
-            myMacAddress = sharedPref.getString(Constants.KEY_BLUETOOTH_ADDRESS,"");
+            myMacAddress = sharedPref.getString(Constants.KEY_BLUETOOTH_ADDRESS,"B4:99:4C:68:4A:59");
         }
         if(myMacAddress.length() ==0){
             //myMacAddress = getBluetoothAddress();
@@ -206,26 +212,33 @@ public void onDestroy() {
     }
 
 }
-/*    @Override
-    protected void onResume() {
+    @Override
+    protected void onResume()
+    {
         super.onResume();
-        if (mBluetoothAdapter == null || !mBluetoothAdapter.isEnabled()) {
-            //Bluetooth is disabled
-            Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-            startActivity(enableBtIntent);
-            finish();
-            return;
-        }
+        rulesGrid.setAdapter(new GridAdapter(this));
+    }
 
-        if (!getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE)) {
-            Toast.makeText(this, "No LE Support.", Toast.LENGTH_SHORT).show();
-            finish();
-            return;
-        }
+/*    @Override
+   protected void onResume() {
+       super.onResume();
+       if (mBluetoothAdapter == null || !mBluetoothAdapter.isEnabled()) {
+           //Bluetooth is disabled
+           Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+           startActivity(enableBtIntent);
+           finish();
+           return;
+       }
+
+       if (!getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE)) {
+           Toast.makeText(this, "No LE Support.", Toast.LENGTH_SHORT).show();
+           finish();
+           return;
+       }
+   }*/
 
         //Begin scanning for LE devices
 
-    }*/
 public boolean setBluetooth(boolean enable) {
 
     boolean isEnabled = mBluetoothAdapter.isEnabled();

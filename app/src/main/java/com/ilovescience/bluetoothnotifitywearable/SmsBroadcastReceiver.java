@@ -72,20 +72,21 @@ public class SmsBroadcastReceiver extends BroadcastReceiver {
            //String callerString = mContext.getString(R.string.my_set_saved_Callers); //not sure why I can't call this inside getSharedPreferences...???
 
             //TODO:Create a class-wide reconstructRulesArray() method
-            sharedPref = mContext.getSharedPreferences(Constants.SHARED_PREFERENCES_KEY, Context.MODE_PRIVATE);
+/*            sharedPref = mContext.getSharedPreferences(Constants.SHARED_PREFERENCES_KEY, Context.MODE_PRIVATE);
             Set<String> myRulesSet = sharedPref.getStringSet(Constants.KEY_RULES, new HashSet<String>());//Retrieve the saved list of phone Numbers
-            List<String> myRulesList = new ArrayList<>(myRulesSet);
+
             int ruleCount = myRulesSet.size();
 
             String[] ruleStringArray = myRulesSet.toArray(new String[ruleCount]);
 
+
+
+            NotificationRule[] myRulesObjects = new NotificationRule[ruleCount];*/
             myContactNumbers = new ArrayList<>();
+            NotificationRule[] myRulesObjects =NotificationRule.reconstructRules(context);
 
-            NotificationRule[] myRulesObjects = new NotificationRule[ruleCount];
-
-            for (int i =0; i < ruleCount; i++)
+            for (int i =0; i < myRulesObjects.length; i++)
             {
-                myRulesObjects[i] = new Gson().fromJson(ruleStringArray[i],NotificationRule.class);
                 myContactNumbers.add(myRulesObjects[i].getmPhoneNumber());
             }
 
@@ -94,13 +95,15 @@ public class SmsBroadcastReceiver extends BroadcastReceiver {
 
             //returns -1 if not found
             int ruleIndex = myContactNumbers.indexOf(smsAddress);
-            //int ruleIndex = myRulesList.indexOf(smsAddress);
+
 
 
 
             if(ruleIndex != -1  && checkKeyword(myRulesObjects[ruleIndex]))
             {
                 String ruleAsString = new Gson().toJson(myRulesObjects[ruleIndex]);
+                BLEConnectionService.startBLEConnectionService(context,ruleAsString);
+                /*
                 Intent myIntent = new Intent(mContext, BLEConnectionService.class);
                 //Intent myIntent = new Intent(mContext, ConfigurationActivity.class);
                 //myIntent.putExtra(Constants.KEY_SENDER, smsAddress);
@@ -108,7 +111,7 @@ public class SmsBroadcastReceiver extends BroadcastReceiver {
                 myIntent.putExtra(Constants.KEY_TRIGGERING_RULE,ruleAsString);
                 myIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 //mContext.startActivity(myIntent);
-                mContext.startService(myIntent);
+                mContext.startService(myIntent);*/
             }
            else {
                 Toast.makeText(mContext, "Rule conditions not met :(", Toast.LENGTH_SHORT).show();

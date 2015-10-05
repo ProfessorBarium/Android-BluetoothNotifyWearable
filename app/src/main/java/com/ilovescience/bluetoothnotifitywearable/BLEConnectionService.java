@@ -107,4 +107,13 @@ public class BLEConnectionService extends IntentService {
             }
         }
     };
+
+    static void startBLEConnectionService(Context mContext,String ruleAsString)
+    {
+
+        Intent myIntent = new Intent(mContext, BLEConnectionService.class);
+        myIntent.putExtra(Constants.KEY_TRIGGERING_RULE,ruleAsString);
+        myIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        mContext.startService(myIntent);
+    }
 }
