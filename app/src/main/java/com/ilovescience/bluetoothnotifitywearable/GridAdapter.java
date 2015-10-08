@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.Toast;
 
 /**
  * Created by Sam on 10/4/2015.
@@ -17,10 +18,12 @@ public class GridAdapter extends BaseAdapter{
     public  GridAdapter(Context context)
     {
         mContext = context;
+        Toast.makeText(mContext, Integer.toString(getCount()), Toast.LENGTH_SHORT).show();
     }
     @Override
     public int getCount() {
         return NotificationRule.reconstructRules(mContext).length;
+
     }
 
     @Override

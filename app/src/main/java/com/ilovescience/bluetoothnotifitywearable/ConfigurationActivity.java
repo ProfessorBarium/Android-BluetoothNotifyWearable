@@ -43,7 +43,7 @@ public class ConfigurationActivity extends Activity {
     //private static Other inst;
     SharedPreferences sharedPref;
     SharedPreferences.Editor editor;
-    Set<String> myContactNumbers;
+    //Set<String> myContactNumbers;
     Set<NotificationRule> myRules; //maybe this should be an arrayList???
 
 
@@ -97,16 +97,17 @@ public class ConfigurationActivity extends Activity {
         //mBluetoothLeScanner = mBluetoothAdapter.getBluetoothLeScanner();
 
 
-        myContactNumbers = sharedPref.getStringSet(getString(R.string.my_set_saved_Callers), new HashSet<String>());//Retrieve the saved list of phone Numbers
+        //myContactNumbers = sharedPref.getStringSet(getString(R.string.my_set_saved_Callers), new HashSet<String>());//Retrieve the saved list of phone Numbers
         //INDEX_CONTACT_SHARED_PREFS = getContactIndex(); //look this number up, ALSO in the preference file
 
 
 
         resetSharedPrefs.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                editor.clear();
-                editor.commit();
-                myContactNumbers = sharedPref.getStringSet(getString(R.string.my_set_saved_Callers),new HashSet<String>());
+              /*  editor.clear();
+                editor.commit();*/
+                clearAllSharedPreferences();
+                //myContactNumbers = sharedPref.getStringSet(getString(R.string.my_set_saved_Callers),new HashSet<String>());
 
                 //use this to only reset phone numbers
                 // myContactNumbers=null;
