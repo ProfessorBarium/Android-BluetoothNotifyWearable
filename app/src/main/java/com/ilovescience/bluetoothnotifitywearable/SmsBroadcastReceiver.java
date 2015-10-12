@@ -102,6 +102,7 @@ public class SmsBroadcastReceiver extends BroadcastReceiver {
             if(ruleIndex != -1  && checkKeyword(myRulesObjects[ruleIndex]))
             {
                 String ruleAsString = new Gson().toJson(myRulesObjects[ruleIndex]);
+
                 BLEConnectionService.startBLEConnectionService(context,ruleAsString);
                 /*
                 Intent myIntent = new Intent(mContext, BLEConnectionService.class);
@@ -143,13 +144,7 @@ private boolean checkKeyword(NotificationRule thisRule)
     if(thisRule.getmKeyword().length()==0) {
         return true;
     }
-    else if(smsBody.contains(thisRule.getmKeyword())) {
-        return  true;
-    }
-    else
-    {
-        return false;
-    }
+    else return smsBody.contains(thisRule.getmKeyword());
 
 
 

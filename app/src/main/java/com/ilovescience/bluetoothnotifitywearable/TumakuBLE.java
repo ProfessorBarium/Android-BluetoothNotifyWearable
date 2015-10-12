@@ -216,7 +216,7 @@ public class TumakuBLE {
 				mGatt.close();
 				if (Constants.DEBUG)
 					Log.i("JMG", "Disconnecting GATT");
-			} catch(Exception ex){};
+			} catch(Exception ex){}
 		}
 		mGatt = null;
 	}

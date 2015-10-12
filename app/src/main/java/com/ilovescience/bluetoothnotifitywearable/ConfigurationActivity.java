@@ -1,42 +1,21 @@
 package com.ilovescience.bluetoothnotifitywearable;
 
-import com.google.gson.Gson;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothDevice;
-import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothManager;
-import android.bluetooth.le.BluetoothLeScanner;
-import android.bluetooth.le.ScanCallback;
-import android.bluetooth.le.ScanFilter;
-import android.bluetooth.le.ScanResult;
-import android.bluetooth.le.ScanSettings;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
-import android.database.Cursor;
-import android.net.Uri;
-import android.provider.ContactsContract;
-
 import android.os.Bundle;
-import android.telephony.SmsMessage;
-import android.util.Log;
-import android.view.KeyEvent;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.Toast;
-
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 public class ConfigurationActivity extends Activity {
@@ -208,9 +187,9 @@ public class ConfigurationActivity extends Activity {
 
 public void onDestroy() {
     super.onDestroy();
-    if(mReceiver!=null) {
+/*    if(mReceiver!=null) {
         unregisterReceiver(mReceiver);
-    }
+    }*/
 
 }
     @Override
@@ -323,7 +302,16 @@ public boolean setBluetooth(boolean enable) {
                         break;
                     case BluetoothAdapter.STATE_ON:
                         Toast.makeText(mContext,"STATE_ON...please connect", Toast.LENGTH_SHORT).show();
-                        connectKnownDevice();
+                        Timer timer = new Timer();
+                        TimerTask connectBLE = new TimerTask() {
+                            @Override
+                            public void run() {
+                                mHM10 = new HM10(myMacAddress,mContext);
+                            }
+                        };
+
+                        timer.schedule(connectBLE, 2000);
+                        unregisterReceiver(mReceiver);
                         break;
                     case BluetoothAdapter.STATE_TURNING_ON:
 

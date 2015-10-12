@@ -127,7 +127,7 @@ public class HM10Activity extends Activity  {
 
 	public void reconnect() {
         mState = WSTATE_CONNECT;
-        mTumakuBLE.resetTumakuBLE();
+        TumakuBLE.resetTumakuBLE();
         mTumakuBLE.setDeviceAddress(mDeviceAddress);
         nextState();
     }
@@ -327,16 +327,16 @@ public class HM10Activity extends Activity  {
 			       if (Constants.DEBUG) Log.i("JMG", "DEVICE_DISCONNECTED message received with full reset flag");
 	    		   Toast.makeText(mContext, "Unrecoverable BT error received. Launching full reset", Toast.LENGTH_SHORT).show();
 	        	   mState=WSTATE_CONNECT;
-	       		   mTumakuBLE.resetTumakuBLE();
+	       		   TumakuBLE.resetTumakuBLE();
 	       		   mTumakuBLE.setDeviceAddress(mDeviceAddress);
-	       		   mTumakuBLE.setup();
+	       		   TumakuBLE.setup();
 	        	   nextState();
 	        	   return;	    		   
 	    	   } else {		       		       
 			       if (mState!=WSTATE_CONNECT){
 		    		   Toast.makeText(mContext, "Device disconnected unexpectedly. Reconnecting.", Toast.LENGTH_SHORT).show();
 		        	   mState=WSTATE_CONNECT;
-		       		   mTumakuBLE.resetTumakuBLE();
+		       		   TumakuBLE.resetTumakuBLE();
 		       		   mTumakuBLE.setDeviceAddress(mDeviceAddress);
 		        	   nextState();
 		        	   return;
