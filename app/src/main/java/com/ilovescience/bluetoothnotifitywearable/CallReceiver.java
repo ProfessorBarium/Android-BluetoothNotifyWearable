@@ -27,7 +27,7 @@ public class CallReceiver extends BroadcastReceiver {
             String incomingNumber = intent.getStringExtra(TelephonyManager.EXTRA_INCOMING_NUMBER);  // 5
             NotificationRule[] myRules = NotificationRule.reconstructRules(context);
 
-            List<String> myContactNumbers = new ArrayList<>();
+            List<String> myContactNumbers = new ArrayList<String>();
 
             for(int i =0; i<myRules.length; i++)
             {

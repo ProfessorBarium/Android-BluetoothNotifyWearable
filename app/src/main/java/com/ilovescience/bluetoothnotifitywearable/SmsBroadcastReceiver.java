@@ -50,7 +50,8 @@ public class SmsBroadcastReceiver extends BroadcastReceiver {
             //mIntent = intent;
 
             String smsMessageStr = "";
-            SmsMessage firstMessage = SmsMessage.createFromPdu((byte[]) sms[0]);
+            SmsMessage firstMessage;
+            firstMessage = SmsMessage.createFromPdu((byte[]) sms[0]);
 
 
             //Check for a multiple message SMS... I think.
@@ -82,7 +83,7 @@ public class SmsBroadcastReceiver extends BroadcastReceiver {
 
 
             NotificationRule[] myRulesObjects = new NotificationRule[ruleCount];*/
-            myContactNumbers = new ArrayList<>();
+            myContactNumbers = new ArrayList<String>();
             NotificationRule[] myRulesObjects =NotificationRule.reconstructRules(context);
 
             for (int i =0; i < myRulesObjects.length; i++)
