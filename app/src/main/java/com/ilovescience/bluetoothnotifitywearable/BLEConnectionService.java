@@ -8,6 +8,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
@@ -39,8 +40,10 @@ public class BLEConnectionService extends IntentService {
 
         mContext = this;
         Bundle myExtras = intent.getExtras();
-        triggeringRule= new Gson().fromJson(myExtras.getString(Constants.KEY_TRIGGERING_RULE),NotificationRule.class);
-        mMacAddress = myExtras.getString(Constants.KEY_BLUETOOTH_ADDRESS,"B4:99:4C:68:4A:59");
+       SharedPreferences sharedPreferences =  mContext.getSharedPreferences(Constants.SHARED_PREFERENCES_KEY, Context.MODE_PRIVATE);
+        triggeringRule= new Gson().fromJson(myExtras.getString(Constants.KEY_TRIGGERING_RULE), NotificationRule.class);
+        //mMacAddress = myExtras.getString(Constants.KEY_BLUETOOTH_ADDRESS, "B4:99:4C:68:4A:59");
+        mMacAddress = sharedPreferences.getString(Constants.KEY_BLUETOOTH_ADDRESS,"B4:99:4C:68:4A:59");
         tryConnection();
 
 
@@ -53,6 +56,7 @@ public class BLEConnectionService extends IntentService {
         }
         else
         {
+            //turn on Bluetooth, and wait for state to change to ON
             setBluetooth(true);
             IntentFilter filter = new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED);
             registerReceiver(mReceiver, filter);
@@ -108,9 +112,9 @@ public class BLEConnectionService extends IntentService {
         }
     };
 
+    //Connect to default BLE device. To be called from any triggering event
     static void startBLEConnectionService(Context mContext,String ruleAsString)
     {
-
         Intent myIntent = new Intent(mContext, BLEConnectionService.class);
         myIntent.putExtra(Constants.KEY_TRIGGERING_RULE,ruleAsString);
         myIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
